@@ -18,7 +18,7 @@ func main() {
 	}
 
 	http.Handle("/", handler.Playground("GraphQL playground", "/query"))
-	http.Handle("/query", handler.GraphQL(issue_reminder_bot.NewExecutableSchema(issue_reminder_bot.Config{Resolvers: &issue_reminder_bot.Resolver{}})))
+	http.Handle("/query", handler.GraphQL(issue_reminder_bot.NewExecutableSchema(issue_reminder_bot.Config{Resolvers: issue_reminder_bot.NewResolver()})))
 
 	log.Printf("connect to http://localhost:%s/ for GraphQL playground", port)
 	log.Fatal(http.ListenAndServe(":"+port, nil))

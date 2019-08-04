@@ -1,24 +1,64 @@
-type Todo {
-  id: ID!
-  text: String!
-  done: Boolean!
-  user: User!
-}
-
 type User {
   id: ID!
   name: String!
+  email: String
+  username: String
+  issues: [Issue!]!
+}
+
+type Issue {
+  id: ID!
+  description: String!
+  assignee: User
+}
+
+interface Integration {
+  driver: String!
+  serverAddress: String!
+  name: String!
+}
+
+type MatterMostIntegration implements Integration {
+  driver: String!
+  serverAddress: String!
+  name: String!
+}
+
+type ServerConfig {
+  integrations: [Integration!]
 }
 
 type Query {
-  todos: [Todo!]!
+  issues: [Issue!]!
+  users: [User!]!
+  config: ServerConfig!
 }
 
-input NewTodo {
-  text: String!
+input NewIssue {
+  description: String!
+  userId: String
+}
+
+input NewUser {
+  name: String!
+  email: String
+  username: String
+}
+
+input AssignIssue {
+  issueId: String!
   userId: String!
 }
 
+input EditIssue {
+  issueId: String!
+  description: String!
+}
+
 type Mutation {
-  createTodo(input: NewTodo!): Todo!
+  createIssue(input: NewIssue!): Issue!
+  createUser(input: NewUser!): User!
+  assignIssue(input: AssignIssue!): Issue!
+  unassignIssue(input: String!): Issue!
+  updateIssue(input: EditIssue): Issue!
 }

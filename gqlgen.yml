@@ -13,6 +13,3 @@ resolver:
   filename: resolver.go
   type: Resolver
 autobind: []
-models:
-  Todo:
-    model: github.com/MrL0co/issue-reminder-bot.Todo
